@@ -35,8 +35,8 @@ export default {
     method(req, res, next){
       let action = 'Find User Tasks'
       Tasks.find({creatorId: req.session.uid})
-        .then(lists => {
-          res.send(handleResponse(action, lists))
+        .then(tasks => {
+          res.send(handleResponse(action, tasks))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })
