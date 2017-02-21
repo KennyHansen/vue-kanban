@@ -3,25 +3,12 @@ let Lists = require('../models/list')
 let Tasks = require('../models/task')
 
 export default {
-  userBoards: {
-    path: '/userboards',
+  boardLists: {
+    path: '/boards/:id/lists',
     reqType: 'get',
     method(req, res, next){
-      let action = 'Find User Boards'
-      Boards.find({creatorId: req.session.uid})
-        .then(boards => {
-          res.send(handleResponse(action, boards))
-        }).catch(error => {
-          return next(handleResponse(action, null, error))
-        })
-    }
-  },
-  userLists: {
-    path: '/userlists',
-    reqType: 'get',
-    method(req, res, next){
-      let action = 'Find User Lists'
-      Lists.find({creatorId: req.session.uid})
+      let action = 'Find Lists in Board'
+      Lists.find({boardId: req.params.id})
         .then(lists => {
           res.send(handleResponse(action, lists))
         }).catch(error => {
@@ -29,14 +16,34 @@ export default {
         })
     }
   },
-  userTasks: {
-    path: '/usertasks',
+  boardTasks: {
+    path: '/boards/:id/tasks',
     reqType: 'get',
     method(req, res, next){
-      let action = 'Find User Tasks'
-      Tasks.find({creatorId: req.session.uid})
+      let action = 'Find Lists in Board'
+      Tasks.find({boardId: req.params.id})
+        .then(tasks => {
+          res.send(handleResponse(action, tasks))
+        }).catch(error => {
+          return next(handleResponse(action, null, error))
+        })
+    }
+  },
+  tasksAndLists: {
+    path: '/boards/:id/all',
+    reqType: 'get',
+    method(req, res, next){
+      let action = 'Find Lists in Board'
+      let data = {}
+      Lists.find({boardId: req.params.id})
         .then(lists => {
-          res.send(handleResponse(action, lists))
+            data.lists = lists
+            Tasks.find({boardId: req.params.id})
+            .then(tasks => {
+                data.tasks = tasks
+                res.send(handleResponse(action, data))
+            })
+            
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })

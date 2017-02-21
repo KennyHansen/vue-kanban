@@ -8,7 +8,14 @@ var schema = new mongoose.Schema({
 	description: { type: String },
 	created: { type: Number, default: Date.now() },
 	// Relations
-	boardId: { type: ObjectId, ref: models.board, required: true }
+	boardId: { type: ObjectId, ref: models.board, required: true },
+	creatorId: {type: ObjectId, ref: models.user.name },
+  	tasks: [{ type: ObjectId, ref: models.task }]
 });
+
+
+schema.post('save', function() {
+
+})
 
 module.exports = mongoose.model(models.list.name, schema);

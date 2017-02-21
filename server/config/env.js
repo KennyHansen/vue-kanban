@@ -3,10 +3,10 @@ let env = {
 	NODE_ENV: 'development',
 	PORT: 3000,
 	DBPROTOCOL: 'mongodb',
-	DBUSERNAME: 'student',
-	DBPASSWORD: 'CodeWorksStudent',
-	DBHOST: 'ds056789.mlab.com:56789',
-	DBNAME: 'codeworks',
+	DBUSERNAME: 'tenouttaten',
+	DBPASSWORD: 'ign',
+	DBHOST: 'ds028679.mlab.com:28679',
+	DBNAME: 'kanban',
 	SERVERNAME: 'dev-server'
 }
 
