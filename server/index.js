@@ -1,4 +1,5 @@
 import server from './config/dev-server'
+//import io from 'socket.io'
 
 let mongoose = require('mongoose')
 let connection = mongoose.connection;
@@ -17,3 +18,4 @@ connection.once('open', function () {
 		console.log(`The server is lit on port ${process.env.PORT}`);
 	})
 });
+
