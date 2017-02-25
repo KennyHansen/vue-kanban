@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <error></error>
+    <!--<error></error>-->
+    <navbar></navbar>
     <!--<img src="./assets/logo.png">-->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Error from './components/Error'
+import Navbar from './components/Navbar'
 export default {
   name: 'app',
-  components: {Error}
+  components: {Navbar}
 }
 </script>
 
@@ -23,5 +24,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   background-color: lightyellow;
+}
+.inline-flex {
+  display: inline-flex;
+  flex-direction: row-reverse;
 }
 </style>

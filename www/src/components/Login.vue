@@ -1,25 +1,31 @@
 <template>
-  <div class="login card">
-      <form @submit.prevent="addBoard">
-            <input type="text" v-model="username">
-            <input type="text" v-model="password">
-            <button>Login</button>
-        </form>
-      <!--<list></list>-->
+  <div class="login">
+    <form @submit.prevent="loginUser">
+      <input type="email" v-model="username" placeholder="Email" required >
+      <input type="password" v-model="password" placeholder="Password" required>
+      <button>Login</button>
+    </form>
+    <!--<list></list>-->
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Board',
-  props: ['board'],
-  data () {
-    return {
-      username: '',
-      password: ''
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+    methods: {
+      loginUser() {
+        this.$root.$data.store.actions.login(this.username, this.password)
+        this.$router.push({path: '/'})
+      }
     }
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

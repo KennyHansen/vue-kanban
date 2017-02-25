@@ -1,20 +1,29 @@
 <template>
     <div class="home">
         <h2>{{msg}}</h2>
+        <!--<button @click="makeBoards">Make boards</button>-->
 
-        <div class="boards container">
-            <div class="row">
-                <div v-for="board in boards">
-                    <div class="col s4">
-                        <board :board="board"></board>
+        <div v-if="user.name">
+            <div class="boards container">
+                <div class="row">
+                    <div v-for="board in boards">
+                        <div class="col s4">
+                            <board :board="board"></board>
+                        </div>
+
                     </div>
-
                 </div>
+                <form class="boards container" @submit.prevent="addBoard">
+                    <input type="text" v-model="boardName" placeholder="New board" required>
+                    <button>Add</button>
+                </form>
             </div>
-            <form @submit.prevent="addBoard">
-                <input type="text" v-model="boardName">
-                <button>Add</button>
-            </form>
+        </div>
+        <div v-else-if="loading">
+            Loading...
+        </div>
+        <div v-else>
+            Please login or register to use Hobord.
         </div>
     </div>
 </template>
@@ -26,12 +35,18 @@
     export default {
         name: 'home',
         components: { Board, Error },
-        mounted() {
-            this.$root.$data.store.actions.getBoards()
-        },
+        // mounted() {
+        //     this.$root.$data.store.actions.()
+        // },
         computed: {
             boards() {
                 return this.$root.$data.store.state.boards
+            },
+            user() {
+                return this.$root.$data.store.state.activeUser
+            },
+            loading() {
+                return this.$root.$data.store.state.isLoading
             }
         },
         data() {
@@ -47,6 +62,9 @@
                     description: "Something"
                 })
                 this.boardName = ''
+            },
+            makeBoards() {
+                this.$root.$data.store.actions.getBoards()
             }
         }
     }

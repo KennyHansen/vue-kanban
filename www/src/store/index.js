@@ -2,18 +2,25 @@ import axios from 'axios'
 
 let api = axios.create({
     baseURL: 'http://localhost:3000/api/',
-    timeout: 3000,
+    timeout: 30000,
     withCredentials: true
 })
 
-axios.post('http://localhost:3000/login',{
-    email:'LEEROOOOOY@jenkins.com',
-    password:'atleastihadchicken'
-})
+// axios.post('http://localhost:3000/login',{
+//     email:'LEEROOOOOY@jenkins.com',
+//     password:'atleastihadchicken'
+// }).then(console.log)
+
+// api.post('http://localhost:3000/login',{
+//     email:'herecomesdatboi@ohshit.waddup',
+//     password:'yolo'
+// })
 
 let state = {
     boards: [],
     activeBoard: {},
+    activeUser: {},
+    isLoading: false,
     lists: [],
     tasks: [],
     error: {}
@@ -21,6 +28,7 @@ let state = {
 
 let handleError = (err) => {
     state.error = err
+    state.isLoading = false
 }
 
 let boardStore = {
@@ -29,8 +37,10 @@ let boardStore = {
     //ACTIONS are responsible for managing all async requests
     actions: {
         getBoards() {
-            api('boards').then(res => {
+            api('userboards').then(res => {
+                console.log(res)
                 state.boards = res.data.data
+                state.isLoading = false
             }).catch(handleError)
         },
         getBoard(id) {
@@ -74,6 +84,32 @@ let boardStore = {
         deleteTask(task) {
             api.delete('tasks/'+ task._id).then(res => {
                 this.getListsAndTasks(task.boardId)
+            }).catch(handleError)
+        },
+        login(email, password) {
+            state.isLoading = true
+            api.post('http://localhost:3000/login',{
+                email:email,
+                password:password
+            }).then(res => {
+                state.activeUser = res.data.data
+                this.getBoards()
+            }).catch(handleError)
+        },
+        register(username, email, password) {
+            state.isLoading = true
+            api.post('http://localhost:3000/register',{
+                name:username,
+                email:email,
+                password:password
+            }).then(res => {
+                this.login(email, password)
+            }).catch(handleError)
+        },
+        logout() {
+            api.delete('http://localhost:3000/logout').then(res => {
+                state.activeUser = {}
+                this.getBoards()
             }).catch(handleError)
         }
     }

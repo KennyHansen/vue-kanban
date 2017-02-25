@@ -1,7 +1,7 @@
 <template>
   <div class="task">
     {{task.name}}
-    <i @click="deleteTask(task)" class="fa fa-times-circle align-right" aria-hidden="true"></i>
+    <i @click="deleteTask(task)" class="fa fa-times-circle inline-flex" aria-hidden="true"></i>
   </div>
 </template>
 
@@ -25,7 +25,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .align-right {
-    display: inline-flex;
-  }
+
 </style>

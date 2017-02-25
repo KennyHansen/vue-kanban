@@ -1,10 +1,10 @@
 <template>
   <div class="board card">
     <div class="card-title">
-      <h3>
+      <h4>
         <router-link :to="'boards/' + board._id">{{board.name}}</router-link>
-      </h3>
-      <button @click="deleteBoard(board)">Delete</button>
+      </h4>
+      <i @click="deleteBoard(board)" class="fa fa-times-circle align-right" aria-hidden="true"></i>
     </div>
     <!--<list></list>-->
   </div>

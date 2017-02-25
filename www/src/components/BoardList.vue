@@ -4,11 +4,11 @@
     <router-link to="/">Back</router-link>
     <h2>{{board.name}}</h2>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <list :list="list" :tasks="tasks" v-for="list in lists"></list>
         <form class="col s3 card" @submit.prevent="addList">
-          <input type="text" v-model="listName">
+          <input type="text" v-model="listName" placeholder="New list" required>
           <button>Add</button>
         </form>
       </div>
@@ -51,6 +51,7 @@
             description: "Something",
             boardId: this.$root.$root.$route.params.id
         })
+        this.listName = ''
       }
     }
   }

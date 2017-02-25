@@ -1,15 +1,15 @@
 <template>
   <div class="List">
-    <div class="col s12 m3 card list">
+    <div class="col s12 m3 card list ">
       <h5>{{list.name}}</h5>
-      <button @click="deleteList(list)">Delete</button>
+      <i @click="deleteList(list)" class="fa fa-times-circle " aria-hidden="true" ></i>
       <div v-for="task in tasks">
         <div class="card blue white-text">
           <task v-if="task.listId == list._id" :task="task"></task>
         </div>
       </div>
       <form @submit.prevent="addTask">
-          <input type="text" v-model="taskName">
+          <input type="text" v-model="taskName" required>
         </form>
     </div>
   </div>
@@ -48,7 +48,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .list {
-    margin: 20px;
     min-height: 500px;
   }
 </style>
