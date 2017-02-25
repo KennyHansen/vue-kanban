@@ -38,7 +38,6 @@ let boardStore = {
     actions: {
         getBoards() {
             api('userboards').then(res => {
-                console.log(res)
                 state.boards = res.data.data
                 state.isLoading = false
             }).catch(handleError)
@@ -46,14 +45,12 @@ let boardStore = {
         getBoard(id) {
             api('boards/' + id).then(res => {
                 state.activeBoard = res.data.data
-                console.log(res.data.data)
             }).catch(handleError)
         },
         getListsAndTasks(id) {
             api('boards/' + id + '/all').then(res => {
                 state.lists = res.data.data.lists
                 state.tasks = res.data.data.tasks
-                console.log(res.data.data)
             }).catch(handleError)
         },
         addBoard(board) {
