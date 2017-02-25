@@ -36,6 +36,7 @@ let boardStore = {
     state,
     //ACTIONS are responsible for managing all async requests
     actions: {
+        // USER BOARDS
         getBoards() {
             api('userboards').then(res => {
                 state.boards = res.data.data
@@ -63,6 +64,7 @@ let boardStore = {
                 this.getBoards()
             }).catch(handleError)
         },
+        // LISTS
         addList(list) {
             api.post('lists/' + list._id, list).then(res => {
                 this.getListsAndTasks(list.boardId)
@@ -73,6 +75,7 @@ let boardStore = {
                 this.getListsAndTasks(list.boardId)
             }).catch(handleError)
         },
+        // TASKS
         addTask(task) {
             api.post('tasks/' + task._id, task).then(res => {
                 this.getListsAndTasks(task.boardId)
@@ -83,6 +86,7 @@ let boardStore = {
                 this.getListsAndTasks(task.boardId)
             }).catch(handleError)
         },
+        // USER AUTHENTICATION
         login(email, password) {
             state.isLoading = true
             api.post('http://localhost:3000/login',{
@@ -107,6 +111,14 @@ let boardStore = {
             api.delete('http://localhost:3000/logout').then(res => {
                 state.activeUser = {}
                 this.getBoards()
+            }).catch(handleError)
+        },
+        authenticate() {
+            api('http://localhost:3000/authenticate').then(res => {
+                if(res.data.data) {
+                    state.activeUser = res.data.data
+                    this.getBoards()
+                }
             }).catch(handleError)
         }
     }

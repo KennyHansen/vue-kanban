@@ -8,8 +8,7 @@
             <router-link :to="'register/'">Register </router-link>
         </div>
         <div v-else>
-            <p v-if="user.name">Welcome, {{user.name}}! <a @click="logout">Logout</a></p>
-            
+            <p v-if="user.name">Welcome, {{user.name}}! <a href='#' @click="logout">Logout</a></p>
         </div>
         
     </nav>
@@ -18,9 +17,13 @@
 <script>
     export default {
         name: 'main',
+        mounted() {
+            this.$root.$data.store.actions.authenticate()
+        },
         methods: {
             logout() {
                 this.$root.$data.store.actions.logout()
+                this.$router.push({path: '/'})
             }
         },
         computed: {
