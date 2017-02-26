@@ -31,6 +31,12 @@ let handleError = (err) => {
     state.isLoading = false
 }
 
+let handleEdit = (elems) => {
+    for(elem of elems) {
+        elem.edit = false;
+    }
+}
+
 let boardStore = {
     //ALL DATA LIVES IN THE STATE
     state,
@@ -40,6 +46,7 @@ let boardStore = {
         getBoards() {
             api('userboards').then(res => {
                 state.boards = res.data.data
+                //handleEdit(state.boards)
                 state.isLoading = false
             }).catch(handleError)
         },
@@ -52,6 +59,8 @@ let boardStore = {
             api('boards/' + id + '/all').then(res => {
                 state.lists = res.data.data.lists
                 state.tasks = res.data.data.tasks
+                //handleEdit(state.lists)
+                //handleEdit(state.tasks)
             }).catch(handleError)
         },
         addBoard(board) {
@@ -119,6 +128,22 @@ let boardStore = {
                     state.activeUser = res.data.data
                     this.getBoards()
                 }
+            }).catch(handleError)
+        },
+        //EDIT
+        editBoard(board) {
+            api.put('boards/'+board._id, board).then(res => {
+                this.getBoards()
+            }).catch(handleError)
+        },
+        editList(list) {
+            api.put('lists/'+list._id, list).then(res => {
+                this.getListsAndTasks(list.boardId)
+            }).catch(handleError)
+        },
+        editTask(task) {
+            api.put('tasks/'+task._id, task).then(res => {
+                this.getListsAndTasks(task.boardId)
             }).catch(handleError)
         }
     }

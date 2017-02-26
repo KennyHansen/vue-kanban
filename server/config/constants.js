@@ -25,6 +25,10 @@ const models = {
     endpoint: 'users',
     preventDefaultApi: true,
     useCustomRoutes: true
+  },
+  comment: {
+    name: 'Comment',
+    endpoint: 'comments'
   }
 }
 
