@@ -8,7 +8,7 @@
       </div>
       <div v-if="edit">
         <i @click="toggleEdit()" class="fa fa-pencil" aria-hidden="true"></i>
-        <form class="list" @submit.prevent="editList(list)">
+        <form @submit.prevent="editList(list)">
           <input type="text" v-model="listName" required>
           <button class="btn btn-small btn-primary" type="submit">Edit</button>
         </form>
