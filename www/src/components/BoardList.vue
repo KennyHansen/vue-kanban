@@ -13,7 +13,6 @@
         </form>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -52,6 +51,9 @@
             boardId: this.$root.$root.$route.params.id
         })
         this.listName = ''
+      },
+      handleDrop() {
+        console.log("drop")
       }
     }
   }

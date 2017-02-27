@@ -1,6 +1,6 @@
 <template>
-  <div class="task card">
-    <div class="card-head blue white-text">
+  <div class="task card" draggable="true" v-on:dragstart.capture="moving">
+    <div class="task-head card-head blue white-text">
       <div v-show="!edit">
         {{task.name}}
         <i @click="toggleEdit()" class="fa fa-pencil" aria-hidden="true"></i>
@@ -12,10 +12,12 @@
           <input type="text" v-model="taskName" required>
           <button class="btn btn-small btn-primary" type="submit">Edit</button>
         </form>
-
       </div>
     </div>
-    (comments would go here)
+    <!--<div v-show="!task.comments" class="input-field col s12 m3">
+        <textarea id="textarea1" class="materialize-textarea" rows="4" cols="100" v-model="text"></textarea>
+        <label for="textarea1">Comments</label>
+    </div>-->
 
   </div>
 </template>
@@ -48,6 +50,9 @@
           this.$root.$data.store.actions.editTask({ name: this.taskName, _id: task._id, boardId: task.boardId });
         }
         this.edit = !this.edit
+      },
+      moving(event) {
+        event.dataTransfer.setData('text/javascript', JSON.stringify(this.task))
       }
     }
   }
@@ -59,6 +64,10 @@
   .task {
     display: inline-block;
     width: 80%;
+  }
+  
+  .task-head {
+    padding: 2px 5px;
   }
   
   i {

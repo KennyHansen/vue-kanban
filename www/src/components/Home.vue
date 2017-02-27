@@ -7,10 +7,9 @@
             <div class="boards container">
                 <div class="row">
                     <div v-for="board in boards">
-                        <div class="col s4">
+                        <div class="col m4 s12">
                             <board :board="board"></board>
                         </div>
-
                     </div>
                 </div>
                 <form class="boards container" @submit.prevent="addBoard">

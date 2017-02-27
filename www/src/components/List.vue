@@ -1,18 +1,17 @@
 <template>
-  <div class="List">
+  <div class="List" droppable="true" v-on:drop.capture="handleDrop" ondragover="event.preventDefault()">
     <div class="col s12 m3 card list">
       <div v-show="!edit">
         <h5>{{list.name}}</h5>
         <i @click="toggleEdit()" class="fa fa-pencil" aria-hidden="true"></i>
         <i @click="deleteList(list)" class="fa fa-times-circle " aria-hidden="true"></i>
       </div>
-      <div v-if="edit">
+      <div v-show="edit">
         <i @click="toggleEdit()" class="fa fa-pencil" aria-hidden="true"></i>
         <form @submit.prevent="editList(list)">
           <input type="text" v-model="listName" required>
           <button class="btn btn-small btn-primary" type="submit">Edit</button>
         </form>
-
       </div>
 
       <div v-for="task in tasks">
@@ -60,6 +59,10 @@
           this.$root.$data.store.actions.editList({ name: this.listName, _id: list._id, boardId: list.boardId });
         }
         this.edit = !this.edit
+      },
+      handleDrop(e) {
+        var movedTask = JSON.parse(e.dataTransfer.getData('text/javascript'))
+        this.$root.$data.store.actions.editTask({ name: movedTask.name, _id: movedTask._id, listId: this.list._id, boardId: this.list.boardId});
       }
     }
   }

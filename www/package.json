@@ -14,7 +14,10 @@
     "axios": "^0.15.3",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3",
+    "sortable": "^2.0.0",
+    "sortablejs": "^1.5.1",
     "vue": "^2.1.10",
+    "vue-drag-and-drop": "^2.2.0",
     "vue-router": "^2.2.0"
   },
   "devDependencies": {
